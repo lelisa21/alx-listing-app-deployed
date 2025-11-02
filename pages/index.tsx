@@ -1,27 +1,35 @@
-import React, { useState } from 'react';
-import Layout from '../components/layout/Layout';
-import PropertyCard from '../components/common/PropertyCard';
-import { PROPERTYLISTINGSAMPLE } from '../constants';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import PropertyCard from "@/components/property/PropertyCard"; 
 
-const Home: React.FC = () => {
-  const [properties, setProperties] = useState(PROPERTYLISTINGSAMPLE);
+export default function Home() {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleSearch = (data: { location: string; checkIn: string; checkOut: string; guests: number }) => {
-    const filtered = PROPERTYLISTINGSAMPLE.filter((prop) =>
-      prop && prop.address.city.toLowerCase().includes(data.location.toLowerCase())
-    );
-    setProperties(filtered);
-  };
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await axios.get("/api/properties");
+        setProperties(response.data);
+      } catch (error) {
+        console.error("Error fetching properties:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <Layout onSearch={handleSearch}>
-      <div className="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {properties.map((property, index) => (
-          <PropertyCard key={index} property={property} />
-        ))}
-      </div>
-    </Layout>
+    <div className="grid grid-cols-3 gap-4">
+      {properties.map((property) => (
+        <PropertyCard key={property.id} property={property} />
+      ))}
+    </div>
   );
-};
-
-export default Home;
+}

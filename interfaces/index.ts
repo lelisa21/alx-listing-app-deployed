@@ -45,6 +45,8 @@ export interface ModalProps {
 // interfaces/index.ts
 export interface PropertyProps {
   name: string;
+  id?:string;
+  description:string;
   address: {
     state: string;
     city: string;
