@@ -2,6 +2,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "@/components/layout/Layout";
+import { AuthProvider } from "@/components/auth/AuthContext";
 type SearchData = {
   location: string;
   checkIn: string;
@@ -16,8 +17,11 @@ export default function App({ Component, pageProps }: AppProps) {
     // or fetching results.
   };
   return (
-    <Layout onSearch={handleSearch}>
+    <AuthProvider>
+       <Layout onSearch={handleSearch}>
       <Component {...pageProps} />
-    </Layout>
+    </Layout> 
+    </AuthProvider>
+    
   );
 }

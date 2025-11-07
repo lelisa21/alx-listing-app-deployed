@@ -1,7 +1,8 @@
 import { PropertyProps } from "@/interfaces";
 
 export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
-  {
+  { 
+     id: "1",
       name: "Villa Ocean Breeze",
       address: {
           state: "Seminyak",
@@ -20,7 +21,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "",
       description: ""
   },
-  {
+  {   id: "2",  
       name: "Mountain Escape Chalet",
       address: {
           state: "Aspen",
@@ -39,7 +40,8 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "30",
       description: ""
   },
-  {
+  { 
+      id: "3",
       name: "Cozy Desert Retreat",
       address: {
           state: "Palm Springs",
@@ -58,7 +60,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "",
       description: ""
   },
-  {
+  {   id: "4",
       name: "City Lights Penthouse",
       address: {
           state: "New York",
@@ -77,7 +79,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "15",
       description: ""
   },
-  {
+  {   id: "5",
       name: "Riverside Cabin",
       address: {
           state: "Queenstown",
@@ -96,7 +98,8 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "20",
       description: ""
   },
-  {
+  {   
+     id: "6",
       name: "Modern Beachfront Villa",
       address: {
           state: "Sidemen",
@@ -115,7 +118,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "",
       description: ""
   },
-  {
+  {   id: "7",
       name: "Lakeside Chalet",
       address: {
           state: "Banff",
@@ -134,7 +137,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "10",
       description: ""
   },
-  {
+  {  id: "8",
       name: "Tropical Garden Villa",
       address: {
           state: "Koh Samui",
@@ -153,7 +156,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "25",
       description: ""
   },
-  {
+  {  id: "9",
       name: "Urban Loft",
       address: {
           state: "Berlin",
@@ -172,7 +175,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "",
       description: ""
   },
-  {
+  { id: "10",
       name: "Secluded Forest Cabin",
       address: {
           state: "Whistler",
@@ -191,7 +194,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "40",
       description: ""
   },
-  {
+  {   id: "11",
       name: "Cliffside Villa",
       address: {
           state: "Amalfi",
@@ -210,7 +213,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "50",
       description: ""
   },
-  {
+  {   id: "12",
       name: "Coastal Escape Villa",
       address: {
           state: "Noosa",
@@ -229,7 +232,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "",
       description: ""
   },
-  {
+  {   id: "13",
       name: "Historical Villa",
       address: {
           state: "Florence",
@@ -248,7 +251,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "35",
       description: ""
   },
-  {
+  {   id: "14",
       name: "Downtown Apartment",
       address: {
           state: "Tokyo",
@@ -267,7 +270,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "",
       description: ""
   },
-  {
+  {   id: "15",
       name: "Luxury Safari Lodge",
       address: {
           state: "Serengeti",
@@ -286,7 +289,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "20",
       description: ""
   },
-  {
+  {   id: "16",
       name: "Countryside Cottage",
       address: {
           state: "Cotswolds",
@@ -306,6 +309,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       description: ""
   },
   {
+     id: "17",
       name: "Riverfront Mansion",
       address: {
           state: "Paris",
@@ -324,7 +328,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "30",
       description: ""
   },
-  {
+  {  id: "18",
       name: "Ski Chalet",
       address: {
           state: "Zermatt",
@@ -343,7 +347,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "",
       description: ""
   },
-  {
+  {  id: "19",
       name: "Island Paradise Villa",
       address: {
           state: "Mahe",
@@ -362,7 +366,7 @@ export const PROPERTYLISTINGSAMPLE: PropertyProps []  =  [
       discount: "60",
       description: ""
   },
-  {
+  {  id: "20",
       name: "Clifftop Retreat",
       address: {
           state: "Cape Town",

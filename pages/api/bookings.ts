@@ -1,49 +1,57 @@
-// pages/api/bookings.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { InputProps } from '@/interfaces';
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { method, body } = req;
 
-  switch (method) {
-    case 'POST':
-      try {
-        const InputProps: InputProps = body;
-        if (!InputProps.propertyId || !InputProps.checkIn || !InputProps.checkOut || !InputProps.guests) {
-          return res.status(400).json({ error: 'Missing required fields' });
-        }
-        if (!InputProps.customer?.name || !InputProps.customer?.email) {
-          return res.status(400).json({ error: 'Missing customer information' });
-        }
-
-        console.log('Booking received:', InputProps);
-
-        const bookingConfirmation = {
-          id: `BKG-${Date.now()}`,
-          ...InputProps,
-          status: 'confirmed',
-          totalAmount: calculateTotalAmount(InputProps), 
-          createdAt: new Date().toISOString()
-        };
-
-        res.status(201).json({
-          success: true,
-          message: 'Booking confirmed successfully',
-          booking: bookingConfirmation
-        });
-      } catch (error) {
-        console.error('Booking error:', error);
-        res.status(500).json({ error: 'Failed to process booking' });
-      }
-      break;
-
-    default:
-      res.setHeader('Allow', ['POST']);
-      res.status(405).end(`Method ${method} Not Allowed`);
-  }
+interface Booking {
+  id: string;
+  userId?: string;
+  createdAt: string;
+  status: string;
+  [key: string]: unknown;
 }
 
-function calculateTotalAmount(InputProps: InputProps): number {
-  const nights = Math.ceil((new Date(InputProps.checkOut).getTime() - new Date(InputProps.checkIn).getTime()) / (1000 * 60 * 60 * 24));
-  const basePrice = 200; 
-  return nights * basePrice;
+const bookings: Booking[] = [];
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    // Get bookings (in real app, I will filter by user)
+    const { userId } = req.query;
+    
+    const userBookings = userId 
+      ? bookings.filter(booking => booking.userId === userId)
+      : bookings;
+    
+    res.status(200).json({
+      success: true,
+      data: userBookings
+    });
+    
+  } else if (req.method === 'POST') {
+    try {
+      const newBooking = {
+        id: Date.now().toString(),
+        ...req.body,
+        createdAt: new Date().toISOString(),
+        status: 'confirmed'
+      };
+      
+      bookings.push(newBooking);
+      
+      res.status(201).json({
+        success: true,
+        data: newBooking,
+        message: 'Booking created successfully'
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: 'Error creating booking',
+        error
+      });
+    }
+  } else {
+    res.setHeader('Allow', ['GET', 'POST']);
+    res.status(405).json({
+      success: false,
+      message: `Method ${req.method} Not Allowed`
+    });
+  }
 }

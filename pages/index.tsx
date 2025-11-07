@@ -1,5 +1,5 @@
 
-import PropertyCard from "@/components/common/PropertyCard";
+import PropertyCard from "@/components/property/PropertyCard";
 import { PropertyProps } from "@/interfaces"; 
 import { PROPERTYLISTINGSAMPLE } from "@/constants";
 

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Search, Calendar, User } from 'lucide-react';
+import { useAuth } from '../auth/AuthContext';
+import SignIn from '../auth/SignIn';
+import SignUp from '../auth/SignUp';
 
 const Header: React.FC<{ onSearch: (data: { location: string; checkIn: string; checkOut: string; guests: number }) => void }> = ({ onSearch }) => {
   const [location, setLocation] = useState('');
@@ -7,9 +10,15 @@ const Header: React.FC<{ onSearch: (data: { location: string; checkIn: string; c
   const [checkOut, setCheckOut] = useState('');
   const [guests, setGuests] = useState(1);
 
+   const [showAuth, setShowAuth] = useState<'signin' | 'signup' | null>(null);
+  
+  const { user, isAuthenticated, signOut } = useAuth();
+
   const handleSearch = () => {
     onSearch({ location, checkIn, checkOut, guests });
   };
+
+const closeAuth = (): void => setShowAuth(null);
 
   return (
     <header className="w-full">
@@ -71,14 +80,45 @@ const Header: React.FC<{ onSearch: (data: { location: string; checkIn: string; c
   </div>
 
   <div className="flex space-x-3 sm:space-x-4">
-    <button className="bg-teal-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-700 transition duration-300 text-sm sm:text-base">
-      Sign in
-    </button>
-    <button className="bg-white border border-gray-300 text-black px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-600 transition duration-300 text-sm sm:text-base">
-      Sign up
-    </button>
+    {!isAuthenticated ? (
+      <>
+        <button
+          onClick={() => setShowAuth('signin')}
+          className="bg-teal-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-700 transition duration-300 text-sm sm:text-base"
+        >
+          Sign in
+        </button>
+        <button
+          onClick={() => setShowAuth('signup')}
+          className="bg-white border border-gray-300 text-black px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-600 transition duration-300 text-sm sm:text-base"
+        >
+          Sign up
+        </button>
+      </>
+    ) : (
+      <button
+        onClick={signOut}
+        className="bg-teal-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-700 transition duration-300 text-sm sm:text-base"
+      >
+        Sign out
+      </button>
+    )}
   </div>
 </div>
+
+{showAuth === 'signin' && (
+        <SignIn 
+          onClose={closeAuth} 
+          switchToSignUp={() => setShowAuth('signup')} 
+        />
+      )}
+      
+      {showAuth === 'signup' && (
+        <SignUp 
+          onClose={closeAuth} 
+          switchToSignIn={() => setShowAuth('signin')} 
+        />
+      )}
 
       <nav className="bg-white px-6 py-4 overflow-x-auto whitespace-nowrap border-t border-gray-200">
         <div className="flex space-x-8">
