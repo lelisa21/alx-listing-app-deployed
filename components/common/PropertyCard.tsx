@@ -6,7 +6,6 @@ const PropertyCard: React.FC<{ property: PropertyProps | undefined }> = ({ prope
   if (!property) {
     return <div>Loading...</div>; 
   }
-
   return (
     <div className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
       <Image src={property.image} alt={property.name} width={300} height={200} className="w-full h-48 object-cover" />
