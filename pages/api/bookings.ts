@@ -1,39 +1,84 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// pages/api/bookings.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 
-interface Booking {
-  id: string;
-  userId?: string;
-  createdAt: string;
-  status: string;
-  [key: string]: unknown;
-}
-
-const bookings: Booking[] = [];
+// Mock bookings data
+// eslint-disable-next-line prefer-const
+let bookings: any[] = [];
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log('Bookings API called:', req.method);
+
   if (req.method === 'GET') {
-    // Get bookings (in real app, I will filter by user)
-    const { userId } = req.query;
+    const { userId, propertyId } = req.query;
     
-    const userBookings = userId 
-      ? bookings.filter(booking => booking.userId === userId)
-      : bookings;
+    let filteredBookings = [...bookings];
+    
+    if (userId) {
+      filteredBookings = filteredBookings.filter(booking => booking.userId === userId);
+    }
+    
+    if (propertyId) {
+      filteredBookings = filteredBookings.filter(booking => booking.propertyId === propertyId);
+    }
     
     res.status(200).json({
       success: true,
-      data: userBookings
+      data: filteredBookings,
+      total: filteredBookings.length
     });
     
   } else if (req.method === 'POST') {
     try {
+      const { 
+        userId, 
+        userName, 
+        userEmail,
+        userPhone,
+        propertyId, 
+        propertyName,
+        propertyImage,
+        price, 
+        bookingFee,
+        totalPrice,
+        rating,
+        reviews,
+        billingAddress,
+        paymentInfo
+      } = req.body;
+      
+      if (!userId || !propertyId || !totalPrice) {
+        return res.status(400).json({
+          success: false,
+          message: 'Missing required booking fields'
+        });
+      }
+
       const newBooking = {
         id: Date.now().toString(),
-        ...req.body,
-        createdAt: new Date().toISOString(),
-        status: 'confirmed'
+        userId,
+        userName: userName || 'Guest',
+        userEmail: userEmail || '',
+        userPhone: userPhone || '',
+        propertyId,
+        propertyName: propertyName || 'Unknown Property',
+        propertyImage: propertyImage || '',
+        price: parseFloat(price) || 0,
+        bookingFee: parseFloat(bookingFee) || 0,
+        totalPrice: parseFloat(totalPrice) || 0,
+        rating: rating || 0,
+        reviews: reviews || 0,
+        status: 'confirmed',
+        billingAddress: billingAddress || {},
+        paymentInfo: paymentInfo || {},
+        bookedAt: new Date().toISOString(),
+        bookingNumber: `BK${Date.now().toString().slice(-8)}`
       };
+
+      bookings.unshift(newBooking);
       
-      bookings.push(newBooking);
+      console.log('New booking created for user:', userId);
+      console.log('Booking details:', newBooking);
       
       res.status(201).json({
         success: true,
@@ -41,10 +86,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         message: 'Booking created successfully'
       });
     } catch (error) {
-      res.status(400).json({
+      console.error('Error creating booking:', error);
+      res.status(500).json({
         success: false,
-        message: 'Error creating booking',
-        error
+        message: 'Error creating booking'
       });
     }
   } else {

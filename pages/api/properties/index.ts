@@ -59,7 +59,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     } catch (error) {
       res.status(400).json({
         success: false,
-        message: 'Error creating property'
+        message: 'Error creating property',
+        error
       });
     }
   } else {

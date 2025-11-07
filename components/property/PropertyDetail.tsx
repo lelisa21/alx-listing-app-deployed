@@ -13,6 +13,7 @@ import {
   Calendar
 } from 'lucide-react';
 import ReviewSection from './ReviewSection';
+import Image from 'next/image';
 const PropertyDetail: React.FC = () => {
   const [property, setProperty] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -103,9 +104,11 @@ const PropertyDetail: React.FC = () => {
 
       {/* Property Image */}
       <div className="mb-8">
-        <img
+        <Image
           src={property.image}
           alt={property.name}
+          width={700}
+          height={500}
           className="w-full h-96 object-cover rounded-xl shadow-md"
         />
       </div>
@@ -188,7 +191,8 @@ const PropertyDetail: React.FC = () => {
               )}
             </div>
 
-            <button className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold mb-4 flex items-center justify-center">
+            <button onClick={() => router.push(`/booking?id=${id}`)}
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold mb-4 flex items-center justify-center">
               <Calendar className="h-5 w-5 mr-2" />
               Book Now
             </button>

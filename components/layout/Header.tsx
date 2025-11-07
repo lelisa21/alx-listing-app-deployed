@@ -3,7 +3,7 @@ import { Search, Calendar, User } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 import SignIn from '../auth/SignIn';
 import SignUp from '../auth/SignUp';
-
+import Link from 'next/link';
 const Header: React.FC<{ onSearch: (data: { location: string; checkIn: string; checkOut: string; guests: number }) => void }> = ({ onSearch }) => {
   const [location, setLocation] = useState('');
   const [checkIn, setCheckIn] = useState('');
@@ -30,7 +30,7 @@ const closeAuth = (): void => setShowAuth(null);
       </div>
 
       <div className="bg-white shadow-sm py-4 px-4 sm:px-6 flex items-center justify-between flex-col gap-4 lg:flex-row">
-  <h1 className="text-3xl sm:text-4xl font-bold text-black">alx</h1>
+  <h1 className="text-3xl sm:text-4xl font-bold text-black"><Link href={"/"}>alx</Link></h1>
 
   <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-6xl gap-3 sm:gap-2 md:gap-4 px-2 sm:px-4 py-2">
     <div className="flex flex-col w-full sm:w-auto px-2 sm:px-4">
@@ -78,48 +78,75 @@ const closeAuth = (): void => setShowAuth(null);
       <Search className="h-5 w-5" />
     </button>
   </div>
+<div className="flex items-center space-x-3 sm:space-x-4">
+  {!isAuthenticated ? (
+    <>
 
-  <div className="flex space-x-3 sm:space-x-4">
-    {!isAuthenticated ? (
-      <>
-        <button
-          onClick={() => setShowAuth('signin')}
-          className="bg-teal-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-700 transition duration-300 text-sm sm:text-base"
-        >
-          Sign in
-        </button>
-        <button
-          onClick={() => setShowAuth('signup')}
-          className="bg-white border border-gray-300 text-black px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-600 transition duration-300 text-sm sm:text-base"
-        >
-          Sign up
-        </button>
-      </>
-    ) : (
+      <button
+        onClick={() => setShowAuth('signin')}
+        className="bg-teal-600 text-white px-4 py-2 rounded-full cursor-pointer hover:bg-teal-700 transition duration-300 text-sm sm:text-base min-w-20 sm:min-w-24"
+      >
+        Sign in
+      </button>
+      <button
+        onClick={() => setShowAuth('signup')}
+        className="bg-white border border-gray-300 text-black px-4 py-2 rounded-full cursor-pointer hover:bg-teal-600 hover:text-white transition duration-300 text-sm sm:text-base min-w-20 sm:min-w-24"
+      >
+        Sign up
+      </button>
+
+      <Link 
+        href="/booking" 
+        className="text-gray-700 hover:text-gray-900 px-4 py-2 border-2 border-gray-200 rounded-full hover:border-gray-300 transition duration-300 text-sm sm:text-base whitespace-nowrap"
+      >
+        My Bookings
+      </Link>
+    </>
+  ) : (
+    // Authenticated User Section
+    <div className="flex items-center space-x-3 sm:space-x-4">
+      <div className="flex items-center space-x-2 bg-teal-50 px-3 py-2 rounded-2xl">
+        <User className="h-4 w-4 text-teal-600" />
+        <span className="text-sm font-medium text-teal-800 whitespace-nowrap">
+          Hi, {user?.firstName}
+          {user?.isGuest && ' (Guest)'}
+        </span>
+      </div>
+      <Link 
+        href="/booking" 
+        className="text-gray-700 hover:text-gray-900 px-4 py-2 border-2 border-gray-200 rounded-full hover:border-gray-300 transition duration-300 text-sm sm:text-base whitespace-nowrap"
+      >
+        My Bookings
+      </Link>
+      
       <button
         onClick={signOut}
-        className="bg-teal-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-full cursor-pointer w-20 sm:w-24 hover:bg-teal-700 transition duration-300 text-sm sm:text-base"
+        className="bg-teal-600 text-white px-4 py-2 rounded-full cursor-pointer hover:bg-teal-700 transition duration-300 text-sm sm:text-base min-w-20 sm:min-w-24"
       >
         Sign out
       </button>
-    )}
-  </div>
+    </div>
+  )}
 </div>
 
+{/* Auth Modals */}
 {showAuth === 'signin' && (
-        <SignIn 
-          onClose={closeAuth} 
-          switchToSignUp={() => setShowAuth('signup')} 
-        />
-      )}
-      
-      {showAuth === 'signup' && (
-        <SignUp 
-          onClose={closeAuth} 
-          switchToSignIn={() => setShowAuth('signin')} 
-        />
-      )}
+  <SignIn 
+    onClose={closeAuth} 
+    switchToSignUp={() => setShowAuth('signup')} 
+  />
+)}
 
+{showAuth === 'signup' && (
+  <SignUp 
+    onClose={closeAuth} 
+    switchToSignIn={() => setShowAuth('signin')} 
+  />
+)}
+
+
+
+  </div>
       <nav className="bg-white px-6 py-4 overflow-x-auto whitespace-nowrap border-t border-gray-200">
         <div className="flex space-x-8">
           {[

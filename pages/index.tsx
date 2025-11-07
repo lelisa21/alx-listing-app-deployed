@@ -1,6 +1,5 @@
 
 import PropertyCard from "@/components/property/PropertyCard";
-import { PropertyProps } from "@/interfaces"; 
 import { PROPERTYLISTINGSAMPLE } from "@/constants";
 
 const Home = () => {

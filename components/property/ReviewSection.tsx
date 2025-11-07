@@ -1,7 +1,7 @@
 // components/property/ReviewSection.tsx
 import { useState, useEffect } from "react";
 import { Star, User, MessageCircle } from 'lucide-react';
-
+import Image from "next/image";
 interface Review {
   id: string;
   userId: string;
@@ -144,9 +144,11 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ propertyId }) => {
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                     {review.userAvatar ? (
-                      <img 
+                      <Image 
                         src={review.userAvatar} 
                         alt={review.userName}
+                        width={700}
+                        height={500}
                         className="w-10 h-10 rounded-full object-cover"
                       />
                     ) : (
